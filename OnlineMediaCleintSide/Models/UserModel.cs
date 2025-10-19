@@ -27,6 +27,8 @@ namespace OnlineMediaCleintSide.Models
 		[StringLength(100, MinimumLength = 6)]
 		public string Password { get; set; } = string.Empty;
 
+		public long PhoneNumber { get; set; }
+
 		[StringLength(20)]
 		public string Role { get; set; } = "User";
 

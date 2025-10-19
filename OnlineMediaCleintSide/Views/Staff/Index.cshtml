@@ -138,9 +138,9 @@
                             {
                                 <div class="col-md-6 col-lg-4 mb-3">
                                     <div class="card h-100">
-                                        @if (!string.IsNullOrEmpty(ad.ImageUrl))
+                                        @if (!string.IsNullOrEmpty(ad.ImagePath))
                                         {
-                                            <img src="@ad.ImageUrl" class="card-img-top" alt="@ad.Title" style="height: 150px; object-fit: cover;">
+                                            <img src="@ad.ImagePath" class="card-img-top" alt="@ad.Title" style="height: 150px; object-fit: cover;">
                                         }
                                         else
                                         {

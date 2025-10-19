@@ -4,11 +4,11 @@ using OnlineMediaCleintSide.Models;
 
 namespace OnlineMediaCleintSide.Controllers
 {
-		public class AdvertisementsController : Controller
+		public class AdvertisementController : Controller
 		{
 			private readonly IHttpClientFactory _httpClientFactory;
 
-			public AdvertisementsController(IHttpClientFactory httpClientFactory)
+			public AdvertisementController(IHttpClientFactory httpClientFactory)
 			{
 				_httpClientFactory = httpClientFactory;
 			}
@@ -25,7 +25,7 @@ namespace OnlineMediaCleintSide.Controllers
 				return int.TryParse(staffIdString, out var staffId) ? staffId : 0;
 			}
 
-			// GET: Advertisements/Index
+			// GET: Advertisement/Index
 			[HttpGet]
 			public async Task<IActionResult> Index()
 			{
@@ -50,7 +50,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Advertisements/Details/5
+			// GET: Advertisement/Details/5
 			[HttpGet]
 			public async Task<IActionResult> Details(int id)
 			{
@@ -75,7 +75,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Advertisements/Create
+			// GET: Advertisement/Create
 			[HttpGet]
 			public IActionResult Create()
 			{
@@ -85,7 +85,7 @@ namespace OnlineMediaCleintSide.Controllers
 				return View();
 			}
 
-			// POST: Advertisements/Create
+			// POST: Advertisement/Create
 			[HttpPost]
 			[ValidateAntiForgeryToken]
 			public async Task<IActionResult> Create(AdvertisementModel model)
@@ -120,7 +120,7 @@ namespace OnlineMediaCleintSide.Controllers
 						{
 							var result = await response.Content.ReadFromJsonAsync<ApiResponse<AdvertisementModel>>();
 							TempData["SuccessMessage"] = result?.Message ?? "Advertisement posted successfully";
-							return RedirectToAction("Index", "Staffs");
+							return RedirectToAction("Index", "Staff");
 						}
 					}
 					else
@@ -131,7 +131,7 @@ namespace OnlineMediaCleintSide.Controllers
 						{
 							var result = await response.Content.ReadFromJsonAsync<ApiResponse<AdvertisementModel>>();
 							TempData["SuccessMessage"] = result?.Message ?? "Advertisement posted successfully";
-							return RedirectToAction("Index", "Staffs");
+							return RedirectToAction("Index", "Staff");
 						}
 					}
 
@@ -145,7 +145,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Advertisements/Edit/5
+			// GET: Advertisement/Edit/5
 			[HttpGet]
 			public async Task<IActionResult> Edit(int id)
 			{
@@ -169,11 +169,11 @@ namespace OnlineMediaCleintSide.Controllers
 				catch (Exception ex)
 				{
 					TempData["ErrorMessage"] = $"Error: {ex.Message}";
-					return RedirectToAction("Index", "Staffs");
+					return RedirectToAction("Index", "Staff");
 				}
 			}
 
-			// POST: Advertisements/Edit/5
+			// POST: Advertisement/Edit/5
 			[HttpPost]
 			[ValidateAntiForgeryToken]
 			public async Task<IActionResult> Edit(int id, AdvertisementModel model)
@@ -195,7 +195,7 @@ namespace OnlineMediaCleintSide.Controllers
 					if (response.IsSuccessStatusCode)
 					{
 						TempData["SuccessMessage"] = "Advertisement updated successfully";
-						return RedirectToAction("Index", "Staffs");
+						return RedirectToAction("Index", "Staff");
 					}
 
 					ModelState.AddModelError("", "Failed to update advertisement");
@@ -208,7 +208,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Advertisements/Delete/5
+			// GET: Advertisement/Delete/5
 			[HttpGet]
 			public async Task<IActionResult> Delete(int id)
 			{

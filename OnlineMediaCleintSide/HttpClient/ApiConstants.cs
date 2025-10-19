@@ -19,6 +19,9 @@
 		{
 			public const string PostArticle = "User/post-article";
 			public const string GetMyArticles = "User/my-articles/{0}";
+			public const string GetProfile = "User/profile/{0}";
+			public const string UpdateProfile = "User/update-profile";
+			public const string GetApprovedArticles = "User/approved-articles";
 		}
 		
 		// Admin endpoints
@@ -33,6 +36,7 @@
 			public const string StaffMembers = "Admin/staff-members";
 			public const string AddStaff = "Admin/add-staff";
 			public const string DeleteStaff = "Admin/delete-staff/{0}";
+			public const string GetAllAdvertisements = "Admin/advertisements";
 		}
 		
 		// Article endpoints

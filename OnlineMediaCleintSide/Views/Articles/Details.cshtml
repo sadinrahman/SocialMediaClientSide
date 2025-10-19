@@ -9,9 +9,9 @@
             @if (Model != null)
             {
                 <article class="card shadow-lg">
-                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    @if (!string.IsNullOrEmpty(Model.ImagePath))
                     {
-                        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="height: 400px; object-fit: cover;">
+                        <img src="@Model.ImagePath" class="card-img-top" alt="@Model.Title" style="height: 400px; object-fit: cover;">
                     }
                     
                     <div class="card-body">
@@ -44,7 +44,7 @@
                         <hr>
 
                         <div class="article-content">
-                            @Html.Raw(Model.Content.Replace("\n", "<br>"))
+                            @Html.Raw(Model.Body.Replace("\n", "<br>"))
                         </div>
 
                         <hr>
@@ -135,7 +135,7 @@ function shareArticle() {
     if (navigator.share) {
         navigator.share({
             title: '@Model?.Title',
-            text: '@Model?.Content?.Substring(0, Math.Min(100, @Model?.Content?.Length ?? 0))',
+            text: '@Model?.Body?.Substring(0, Math.Min(100, @Model?.Body?.Length ?? 0))',
             url: window.location.href
         });
     } else {

@@ -5,11 +5,11 @@ using OnlineMediaCleintSide.Models;
 namespace OnlineMediaCleintSide.Controllers
 {
 	
-		public class AdminsController : Controller
+		public class AdminController : Controller
 		{
 			private readonly IHttpClientFactory _httpClientFactory;
 
-			public AdminsController(IHttpClientFactory httpClientFactory)
+			public AdminController(IHttpClientFactory httpClientFactory)
 			{
 				_httpClientFactory = httpClientFactory;
 			}
@@ -19,7 +19,7 @@ namespace OnlineMediaCleintSide.Controllers
 				return HttpContext.Session.GetString("UserRole") == "Admin";
 			}
 
-			// GET: Admins/Index (Dashboard)
+			// GET: Admin/Index (Dashboard)
 			[HttpGet]
 			public async Task<IActionResult> Index()
 			{
@@ -57,7 +57,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Admins/AllArticlesList
+			// GET: Admin/AllArticlesList
 			[HttpGet]
 			public async Task<IActionResult> AllArticlesList()
 			{
@@ -85,7 +85,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Admins/ApproveUser
+			// GET: Admin/ApproveUser
 			[HttpGet]
 			public async Task<IActionResult> ApproveUser(int id)
 			{
@@ -137,7 +137,7 @@ namespace OnlineMediaCleintSide.Controllers
 				return RedirectToAction("Index");
 			}
 
-			// GET: Admins/StaffList
+			// GET: Admin/StaffList
 			[HttpGet]
 			public async Task<IActionResult> StaffList()
 			{
@@ -165,7 +165,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Admins/CreateStaff
+			// GET: Admin/CreateStaff
 			[HttpGet]
 			public IActionResult CreateStaff()
 			{
@@ -175,7 +175,7 @@ namespace OnlineMediaCleintSide.Controllers
 				return View();
 			}
 
-			// POST: Admins/CreateStaff
+			// POST: Admin/CreateStaff
 			[HttpPost]
 			[ValidateAntiForgeryToken]
 			public async Task<IActionResult> CreateStaff(StaffModel model)
@@ -208,7 +208,7 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 			}
 
-			// GET: Admins/DeleteStaff
+			// GET: Admin/DeleteStaff
 			[HttpGet]
 			public async Task<IActionResult> DeleteStaff(int id)
 			{
@@ -234,7 +234,7 @@ namespace OnlineMediaCleintSide.Controllers
 				return RedirectToAction("StaffList");
 			}
 
-			// GET: Admins/ApproveArticle
+			// GET: Admin/ApproveArticle
 			[HttpGet]
 			public async Task<IActionResult> ApproveArticle(int id)
 			{
@@ -260,7 +260,7 @@ namespace OnlineMediaCleintSide.Controllers
 				return RedirectToAction("Index");
 			}
 
-			// GET: Admins/DeclineArticle
+			// GET: Admin/DeclineArticle
 			[HttpGet]
 			public async Task<IActionResult> DeclineArticle(int id)
 			{

@@ -29,12 +29,12 @@
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
 
-                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
                         {
                             <div class="mb-3">
                                 <label class="form-label">Current Image</label>
                                 <div>
-                                    <img src="@Model.ImageUrl" alt="Current" style="max-width: 200px;" class="img-thumbnail">
+                                    <img src="@Model.ImagePath" alt="Current" style="max-width: 200px;" class="img-thumbnail">
                                 </div>
                             </div>
                         }

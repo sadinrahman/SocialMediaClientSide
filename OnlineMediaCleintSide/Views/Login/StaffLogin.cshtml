@@ -1,0 +1,68 @@
+@model OnlineMediaCleintSide.Models.LoginRequest
+@{
+    ViewData["Title"] = "Staff Login - Online Media";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white text-center">
+                    <h3 class="mb-0">Staff Login</h3>
+                    <p class="mb-0">Sign in to your staff account</p>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <form asp-action="StaffLogin" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label">Username</label>
+                            <input asp-for="Username" class="form-control" placeholder="Enter your username" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-user-tie"></i> Staff Sign In
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr>
+
+                    <div class="text-center">
+                        <p class="mb-2">Need a staff account?</p>
+                        <p class="text-muted small">Contact your administrator for staff account creation.</p>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a href="@Url.Action("Login", "Home")" class="btn btn-link">
+                            <i class="fas fa-arrow-left"></i> Back to Login Options
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

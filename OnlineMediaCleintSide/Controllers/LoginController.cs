@@ -134,8 +134,8 @@ namespace OnlineMediaCleintSide.Controllers
 						// Redirect based on role
 						return result.Data.Role switch
 						{
-							"Admin" => RedirectToAction("Index", "Admins"),
-							"Staff" => RedirectToAction("Index", "Staffs"),
+							"Admin" => RedirectToAction("Index", "Admin"),
+							"Staff" => RedirectToAction("Index", "Staff"),
 							_ => RedirectToAction("Login", "Home")
 						};
 					}

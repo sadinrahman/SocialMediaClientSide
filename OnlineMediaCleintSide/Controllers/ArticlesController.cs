@@ -105,7 +105,7 @@ namespace OnlineMediaCleintSide.Controllers
 				{
 					using var content = new MultipartFormDataContent();
 					content.Add(new StringContent(model.Title), "Title");
-					content.Add(new StringContent(model.Content), "Content");
+					content.Add(new StringContent(model.Body), "Content");
 					content.Add(new StringContent(model.UserId.ToString()), "UserId");
 
 					if (!string.IsNullOrEmpty(model.Category))

@@ -13,7 +13,11 @@ namespace OnlineMediaCleintSide.Models
 		[Required]
 		public string Description { get; set; } = string.Empty;
 
-		public string? ImageUrl { get; set; }
+		public string ImagePath { get; set; } = string.Empty;
+
+		[Required]
+		[StringLength(50)]
+		public string Category { get; set; } = string.Empty;
 
 		[Display(Name = "Image File")]
 		public IFormFile? ImageFile { get; set; }

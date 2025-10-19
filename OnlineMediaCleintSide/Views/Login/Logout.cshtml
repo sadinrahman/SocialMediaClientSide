@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Logout - Online Media";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-warning text-dark text-center">
+                    <h3 class="mb-0">Logging Out</h3>
+                    <p class="mb-0">Please wait while we sign you out...</p>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <div class="spinner-border text-warning mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    
+                    <p class="lead">You are being signed out of your account.</p>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Thank you for using Online Media!</strong>
+                        <br>You will be redirected to the login page shortly.
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="@Url.Action("Login", "Home")" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> Back to Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auto-redirect after 2 seconds
+    setTimeout(function() {
+        window.location.href = '@Url.Action("Login", "Home")';
+    }, 2000);
+</script>

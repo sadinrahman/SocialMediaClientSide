@@ -45,7 +45,7 @@ namespace OnlineMediaCleintSide.Controllers
 				try
 				{
 					var client = _httpClientFactory.CreateClient("BackendAPI");
-					var response = await client.PutAsJsonAsync($"User/update/{id}", model);
+					var response = await client.PutAsJsonAsync(ApiConstants.UserEndpoints.UpdateProfile, model);
 
 					if (response.IsSuccessStatusCode)
 					{

@@ -4,11 +4,11 @@ using OnlineMediaCleintSide.Models;
 
 namespace OnlineMediaCleintSide.Controllers
 {
-	public class StaffsController : Controller
+	public class StaffController : Controller
 	{
 		private readonly IHttpClientFactory _httpClientFactory;
 
-		public StaffsController(IHttpClientFactory httpClientFactory)
+		public StaffController(IHttpClientFactory httpClientFactory)
 		{
 			_httpClientFactory = httpClientFactory;
 		}
@@ -19,7 +19,7 @@ namespace OnlineMediaCleintSide.Controllers
 			return role == "Staff" || role == "Admin";
 		}
 
-		// GET: Staffs/Index
+		// GET: Staff/Index
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
@@ -47,7 +47,7 @@ namespace OnlineMediaCleintSide.Controllers
 			}
 		}
 
-		// GET: Staffs/Details (View Users)
+		// GET: Staff/Details (View Users)
 		[HttpGet]
 		public async Task<IActionResult> Details()
 		{
@@ -75,7 +75,7 @@ namespace OnlineMediaCleintSide.Controllers
 			}
 		}
 
-		// GET: Staffs/Edit (Edit Advertisement)
+		// GET: Staff/Edit (Edit Advertisement)
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
@@ -103,7 +103,7 @@ namespace OnlineMediaCleintSide.Controllers
 			}
 		}
 
-		// POST: Staffs/Edit
+		// POST: Staff/Edit
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, AdvertisementModel model)

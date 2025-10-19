@@ -53,10 +53,10 @@
 
                         <div class="mb-3">
                             <label asp-for="ImageFile" class="form-label">Featured Image</label>
-                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            @if (!string.IsNullOrEmpty(Model.ImagePath))
                             {
                                 <div class="mb-2">
-                                    <img src="@Model.ImageUrl" class="img-thumbnail" style="max-width: 200px;" alt="Current image">
+                                    <img src="@Model.ImagePath" class="img-thumbnail" style="max-width: 200px;" alt="Current image">
                                     <p class="text-muted small">Current image</p>
                                 </div>
                             }
@@ -66,10 +66,22 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Content" class="form-label">Article Content</label>
-                            <textarea asp-for="Content" class="form-control" rows="15" placeholder="Write your article content here..."></textarea>
-                            <span asp-validation-for="Content" class="text-danger"></span>
+                            <label asp-for="Body" class="form-label">Article Content</label>
+                            <textarea asp-for="Body" class="form-control" rows="15" placeholder="Write your article content here..."></textarea>
+                            <span asp-validation-for="Body" class="text-danger"></span>
                             <div class="form-text">Update your article content</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Summary" class="form-label">Summary</label>
+                            <textarea asp-for="Summary" class="form-control" rows="3" placeholder="Brief summary of your article..."></textarea>
+                            <span asp-validation-for="Summary" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Topic" class="form-label">Topic</label>
+                            <input asp-for="Topic" class="form-control" placeholder="Main topic of your article" />
+                            <span asp-validation-for="Topic" class="text-danger"></span>
                         </div>
 
                         <div class="alert alert-info">

@@ -201,14 +201,14 @@
                             {
                                 <div class="col-md-4 mb-3">
                                     <div class="card">
-                                        @if (!string.IsNullOrEmpty(article.ImageUrl))
+                                        @if (!string.IsNullOrEmpty(article.ImagePath))
                                         {
-                                            <img src="@article.ImageUrl" class="card-img-top" alt="@article.Title" style="height: 150px; object-fit: cover;">
+                                            <img src="@article.ImagePath" class="card-img-top" alt="@article.Title" style="height: 150px; object-fit: cover;">
                                         }
                                         <div class="card-body">
                                             <h6 class="card-title">@article.Title</h6>
                                             <p class="card-text text-muted small">By @article.AuthorName</p>
-                                            <p class="card-text">@(article.Content.Length > 100 ? article.Content.Substring(0, 100) + "..." : article.Content)</p>
+                                            <p class="card-text">@(article.Body.Length > 100 ? article.Body.Substring(0, 100) + "..." : article.Body)</p>
                                             <div class="d-flex justify-content-between">
                                                 <small class="text-muted">@article.CreatedAt.ToString("MMM dd")</small>
                                                 <div>

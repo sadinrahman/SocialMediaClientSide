@@ -1,22 +1,17 @@
-﻿@{
+@model OnlineMediaCleintSide.Models.LoginRequest
+@{
     ViewData["Title"] = "Login - Online Media";
 }
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white text-center">
-                    <h3 class="mb-0">Login to Online Media</h3>
+                    <h2 class="mb-0">Welcome to Online Media</h2>
+                    <p class="mb-0">Choose your login type</p>
                 </div>
                 <div class="card-body p-4">
-                    @if (TempData["SuccessMessage"] != null)
-                    {
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            @TempData["SuccessMessage"]
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    }
                     @if (TempData["ErrorMessage"] != null)
                     {
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -25,67 +20,103 @@
                         </div>
                     }
 
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
                     <div class="row">
                         <!-- User Login -->
                         <div class="col-md-6">
-                            <h5 class="text-center mb-3">User Login</h5>
-                            <form asp-action="UserLogin" asp-controller="Login" method="post">
-                                <div class="mb-3">
-                                    <label for="userName" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="userName" name="UserName" required>
+                            <div class="card h-100">
+                                <div class="card-header bg-info text-white text-center">
+                                    <h4 class="mb-0">User Login</h4>
+                                    <p class="mb-0">For regular users</p>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="userPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="userPassword" name="Password" required>
+                                <div class="card-body">
+                                    <form asp-action="UserLogin" asp-controller="Login" method="post">
+                                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                                        
+                                        <div class="mb-3">
+                                            <label asp-for="Username" class="form-label">Username</label>
+                                            <input asp-for="Username" class="form-control" placeholder="Enter your username" />
+                                            <span asp-validation-for="Username" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label asp-for="Password" class="form-label">Password</label>
+                                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-info btn-lg">
+                                                <i class="fas fa-user"></i> User Login
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <hr>
+                                    <div class="text-center">
+                                        <p class="mb-2">Don't have an account?</p>
+                                        <a href="@Url.Action("Register", "Login")" class="btn btn-outline-info">
+                                            <i class="fas fa-user-plus"></i> Register Here
+                                        </a>
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">Login as User</button>
-                            </form>
+                            </div>
                         </div>
 
-                        <!-- Staff/Admin Login -->
+                        <!-- Staff Login -->
                         <div class="col-md-6">
-                            <h5 class="text-center mb-3">Staff/Admin Login</h5>
-                            <form asp-action="StaffLogin" asp-controller="Login" method="post">
-                                <div class="mb-3">
-                                    <label for="staffUserName" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="staffUserName" name="UserName" required>
+                            <div class="card h-100">
+                                <div class="card-header bg-success text-white text-center">
+                                    <h4 class="mb-0">Staff Login</h4>
+                                    <p class="mb-0">For staff and admin</p>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="staffPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="staffPassword" name="Password" required>
+                                <div class="card-body">
+                                    <form asp-action="StaffLogin" asp-controller="Login" method="post">
+                                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                                        
+                                        <div class="mb-3">
+                                            <label asp-for="Username" class="form-label">Username</label>
+                                            <input asp-for="Username" class="form-control" placeholder="Enter your username" />
+                                            <span asp-validation-for="Username" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label asp-for="Password" class="form-label">Password</label>
+                                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-success btn-lg">
+                                                <i class="fas fa-user-tie"></i> Staff Login
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <hr>
+                                    <div class="text-center">
+                                        <p class="mb-2">Need staff access?</p>
+                                        <p class="text-muted small">Contact your administrator for staff account creation.</p>
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-success w-100">Login as Staff/Admin</button>
-                            </form>
+                            </div>
                         </div>
                     </div>
 
-                    <hr class="my-4">
-                    <div class="text-center">
-                        <p class="mb-0">Don't have an account?</p>
-                        <a href="@Url.Action("Register", "Login")" class="btn btn-outline-primary">Register as User</a>
+                    <div class="text-center mt-4">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-.card {
-    border: none;
-    border-radius: 15px;
-}
-
-.card-header {
-    border-radius: 15px 15px 0 0 !important;
-}
-
-.btn {
-    border-radius: 25px;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-}
-</style>

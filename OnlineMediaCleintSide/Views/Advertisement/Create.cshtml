@@ -1,0 +1,174 @@
+﻿@model OnlineMediaCleintSide.Models.AdvertisementModel
+@{
+    ViewData["Title"] = "Create Advertisement - Online Media";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">Create New Advertisement</h4>
+                </div>
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Advertisement Title</label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter a compelling title for your advertisement" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                            <div class="form-text">Make it catchy and attention-grabbing</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Describe your advertisement in detail..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <div class="form-text">Provide detailed information about what you're advertising</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageFile" class="form-label">Advertisement Image</label>
+                            <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            <div class="form-text">Upload an attractive image for your advertisement (recommended size: 800x600px)</div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Tips for Effective Advertisements:</strong>
+                            <ul class="mb-0 mt-2">
+                                <li>Use clear, high-quality images</li>
+                                <li>Write compelling titles that grab attention</li>
+                                <li>Include relevant contact information in the description</li>
+                                <li>Make sure your content follows community guidelines</li>
+                            </ul>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Index", "Advertisement")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Advertisements
+                            </a>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary me-2" onclick="previewAdvertisement()">
+                                    <i class="fas fa-eye"></i> Preview
+                                </button>
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-paper-plane"></i> Create Advertisement
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Advertisement Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div id="previewImage" class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-image fa-3x text-muted">No image selected</i>
+                    </div>
+                    <div class="card-body">
+                        <h5 id="previewTitle" class="card-title">Advertisement Title</h5>
+                        <p id="previewDescription" class="card-text">Advertisement description will appear here...</p>
+                        <small class="text-muted">Created by: @Context.Session.GetString("FullName")</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        function previewAdvertisement() {
+            const title = document.querySelector('input[name="Title"]').value || 'Advertisement Title';
+            const description = document.querySelector('textarea[name="Description"]').value || 'Advertisement description will appear here...';
+            const imageFile = document.querySelector('input[name="ImageFile"]').files[0];
+            
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewDescription').textContent = description;
+            
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').innerHTML = `<img src="${e.target.result}" class="img-fluid" alt="Preview" style="height: 200px; object-fit: cover; width: 100%;">`;
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                document.getElementById('previewImage').innerHTML = '<i class="fas fa-image fa-3x text-muted">No image selected</i>';
+            }
+            
+            new bootstrap.Modal(document.getElementById('previewModal')).show();
+        }
+
+        // Auto-save functionality
+        let autoSaveTimer;
+        document.querySelector('textarea[name="Description"]').addEventListener('input', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(function() {
+                console.log('Auto-saving advertisement draft...');
+            }, 30000); // Auto-save every 30 seconds
+        });
+    </script>
+}
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.btn {
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+</style>

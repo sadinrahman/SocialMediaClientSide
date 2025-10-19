@@ -1,0 +1,180 @@
+﻿@model OnlineMediaCleintSide.Models.AdvertisementModel
+@{
+    ViewData["Title"] = Model?.Title ?? "Advertisement Details";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            @if (Model != null)
+            {
+                <div class="card shadow-lg">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="height: 400px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                            <i class="fas fa-image fa-3x text-muted">No Image</i>
+                        </div>
+                    }
+                    
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h1 class="display-5 fw-bold text-info">@Model.Title</h1>
+                                <div class="d-flex align-items-center text-muted">
+                                    <i class="fas fa-user-tie me-2"></i>
+                                    <span>By @Model.StaffName</span>
+                                    <span class="mx-2">•</span>
+                                    <i class="fas fa-calendar me-2"></i>
+                                    <span>@Model.CreatedAt.ToString("MMMM dd, yyyy")</span>
+                                </div>
+                            </div>
+                            @if (Model.IsActive)
+                            {
+                                <span class="badge bg-success fs-6">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary fs-6">Inactive</span>
+                            }
+                        </div>
+
+                        <hr>
+
+                        <div class="advertisement-content">
+                            <h5>Description</h5>
+                            <p class="lead">@Html.Raw(Model.Description.Replace("\n", "<br>"))</p>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-3">
+                                <button class="btn btn-outline-primary" onclick="shareAdvertisement()">
+                                    <i class="fas fa-share"></i> Share
+                                </button>
+                                <button class="btn btn-outline-info" onclick="contactAdvertiser()">
+                                    <i class="fas fa-envelope"></i> Contact
+                                </button>
+                                <button class="btn btn-outline-success" onclick="bookmarkAdvertisement()">
+                                    <i class="fas fa-bookmark"></i> Bookmark
+                                </button>
+                            </div>
+                            <div class="text-muted">
+                                <small>Last updated: @(Model.UpdatedAt?.ToString("MMM dd, yyyy") ?? Model.CreatedAt.ToString("MMM dd, yyyy"))</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advertiser Info -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-user-tie fa-3x text-info"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-1">@Model.StaffName</h5>
+                                <p class="text-muted mb-0">Advertisement Creator</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Advertisements -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Other Advertisements</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Sample Related Advertisement</h6>
+                                        <p class="card-text text-muted">This is a sample related advertisement that would be populated from the database.</p>
+                                        <a href="#" class="btn btn-sm btn-outline-info">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Another Advertisement</h6>
+                                        <p class="card-text text-muted">Another sample advertisement for demonstration purposes.</p>
+                                        <a href="#" class="btn btn-sm btn-outline-info">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                    <h3>Advertisement Not Found</h3>
+                    <p class="text-muted">The advertisement you're looking for doesn't exist or has been removed.</p>
+                    <a href="@Url.Action("Index", "Advertisement")" class="btn btn-info">Back to Advertisements</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+function shareAdvertisement() {
+    if (navigator.share) {
+        navigator.share({
+            title: '@Model?.Title',
+            text: '@Model?.Description?.Substring(0, Math.Min(100, @Model?.Description?.Length ?? 0))',
+            url: window.location.href
+        });
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        alert('Advertisement link copied to clipboard!');
+    }
+}
+
+function contactAdvertiser() {
+    // Implement contact functionality
+    alert('Contact functionality would be implemented here. This could open a contact form or email client.');
+}
+
+function bookmarkAdvertisement() {
+    // Implement bookmark functionality
+    alert('Advertisement bookmarked! (This feature can be implemented with backend API)');
+}
+</script>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.advertisement-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.btn {
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.badge {
+    font-size: 0.8rem;
+}
+</style>

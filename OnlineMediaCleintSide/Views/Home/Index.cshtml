@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Online Media - Home";
+}
+
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold text-primary">Welcome to Online Media</h1>
+                <p class="lead">Share your thoughts, read articles, and stay connected with our community of writers and readers.</p>
+                <div class="d-flex gap-3">
+                    <a href="@Url.Action("Login", "Home")" class="btn btn-primary btn-lg">Login</a>
+                    <a href="@Url.Action("Register", "Login")" class="btn btn-outline-primary btn-lg">Register</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://via.placeholder.com/600x400/007bff/ffffff?text=Online+Media" class="img-fluid rounded" alt="Online Media">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">For Users</h5>
+                    <p class="card-text">Register, write articles, and share your thoughts with the community.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-briefcase fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">For Staff</h5>
+                    <p class="card-text">Manage advertisements and view user profiles to support the community.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-cog fa-3x text-warning mb-3"></i>
+                    <h5 class="card-title">For Admins</h5>
+                    <p class="card-text">Full system control - approve users, manage staff, and moderate content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 100px 0;
+    margin-bottom: 50px;
+}
+
+.hero-section h1 {
+    color: white !important;
+}
+
+.hero-section .btn {
+    border-radius: 25px;
+    padding: 12px 30px;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+</style>

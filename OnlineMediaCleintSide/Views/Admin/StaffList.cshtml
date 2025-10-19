@@ -1,0 +1,179 @@
+﻿@model List<OnlineMediaCleintSide.Models.StaffModel>
+@{
+    ViewData["Title"] = "Staff Management - Admin";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Admin Panel</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Admin")">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ApproveUser", "Admin")">
+                                <i class="fas fa-user-check"></i> Pending Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ApproveArticle", "Admin")">
+                                <i class="fas fa-newspaper"></i> Pending Articles
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="@Url.Action("StaffList", "Admin")">
+                                <i class="fas fa-users-cog"></i> Staff Management
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Staff Management</h2>
+                <a href="@Url.Action("CreateStaff", "Admin")" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Staff
+                </a>
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Staff Member</th>
+                                        <th>Designation</th>
+                                        <th>Contact Info</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var staff in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-user-tie fa-2x text-success me-3"></i>
+                                                    <div>
+                                                        <h6 class="mb-1">@staff.FirstName @staff.LastName</h6>
+                                                        <small class="text-muted">@staff.UserName</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-info">@staff.Designation</span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <i class="fas fa-envelope text-muted me-2"></i>
+                                                    <span>@staff.Email</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if (staff.IsActive)
+                                                {
+                                                    <span class="badge bg-success">Active</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Inactive</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a href="@Url.Action("Edit", "Staff", new { id = staff.Id })" class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+                                                    <a href="@Url.Action("DeleteStaff", "Admin", new { id = staff.Id })" 
+                                                       class="btn btn-danger btn-sm"
+                                                       onclick="return confirm('Are you sure you want to delete this staff member? This action cannot be undone.')">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-users-cog fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">No Staff Members</h4>
+                    <p class="text-muted">Add staff members to help manage the platform.</p>
+                    <a href="@Url.Action("CreateStaff", "Admin")" class="btn btn-primary">Add First Staff Member</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+.nav-pills .nav-link {
+    border-radius: 25px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+.nav-pills .nav-link.active {
+    background-color: #dc3545;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+</style>

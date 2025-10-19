@@ -1,0 +1,183 @@
+﻿@model List<OnlineMediaCleintSide.Models.ArticleModel>
+@{
+    ViewData["Title"] = "User Dashboard - Online Media";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">User Dashboard</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-user-circle fa-3x text-primary"></i>
+                        <h6 class="mt-2">@Context.Session.GetString("FullName")</h6>
+                        <small class="text-muted">@Context.Session.GetString("UserName")</small>
+                    </div>
+                    <hr>
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="@Url.Action("Index", "Users")">
+                                <i class="fas fa-home"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Create", "Articles")">
+                                <i class="fas fa-plus"></i> Write Article
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Articles")">
+                                <i class="fas fa-newspaper"></i> All Articles
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Edit", "Users")">
+                                <i class="fas fa-user-edit"></i> Edit Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "Login")">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Welcome back, @Context.Session.GetString("FullName")!</h2>
+                <a href="@Url.Action("Create", "Articles")" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Write New Article
+                </a>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>Articles</h4>
+                                    <p class="mb-0">Your published articles</p>
+                                </div>
+                                <i class="fas fa-newspaper fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>Views</h4>
+                                    <p class="mb-0">Total article views</p>
+                                </div>
+                                <i class="fas fa-eye fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>Community</h4>
+                                    <p class="mb-0">Active members</p>
+                                </div>
+                                <i class="fas fa-users fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Articles -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Recent Articles</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="row">
+                            @foreach (var article in Model.Take(6))
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100">
+                                        @if (!string.IsNullOrEmpty(article.ImageUrl))
+                                        {
+                                            <img src="@article.ImageUrl" class="card-img-top" alt="@article.Title" style="height: 200px; object-fit: cover;">
+                                        }
+                                        <div class="card-body">
+                                            <h6 class="card-title">@article.Title</h6>
+                                            <p class="card-text text-muted small">@article.AuthorName</p>
+                                            <p class="card-text">@(article.Content.Length > 100 ? article.Content.Substring(0, 100) + "..." : article.Content)</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">@article.CreatedAt.ToString("MMM dd, yyyy")</small>
+                                                <a href="@Url.Action("Details", "Articles", new { id = article.Id })" class="btn btn-sm btn-outline-primary">Read More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No articles available</h5>
+                            <p class="text-muted">Be the first to write an article!</p>
+                            <a href="@Url.Action("Create", "Articles")" class="btn btn-primary">Write Your First Article</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.nav-pills .nav-link {
+    border-radius: 25px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+.nav-pills .nav-link.active {
+    background-color: #007bff;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+</style>

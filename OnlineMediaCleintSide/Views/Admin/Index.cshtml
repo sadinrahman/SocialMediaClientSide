@@ -1,0 +1,276 @@
+﻿@model OnlineMediaCleintSide.Models.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard - Online Media";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Admin Panel</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-user-shield fa-3x text-danger"></i>
+                        <h6 class="mt-2">@Context.Session.GetString("FullName")</h6>
+                        <small class="text-muted">Administrator</small>
+                    </div>
+                    <hr>
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="@Url.Action("Index", "Admin")">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ApproveUser", "Admin")">
+                                <i class="fas fa-user-check"></i> Pending Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ApproveArticle", "Admin")">
+                                <i class="fas fa-newspaper"></i> Pending Articles
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("StaffList", "Admin")">
+                                <i class="fas fa-users-cog"></i> Staff Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("AllArticlesList", "Admin")">
+                                <i class="fas fa-list"></i> All Articles
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "Login")">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Admin Dashboard</h2>
+                <div class="text-muted">
+                    <i class="fas fa-calendar"></i> @DateTime.Now.ToString("MMMM dd, yyyy")
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>@(Model.PendingUsers?.Count ?? 0)</h4>
+                                    <p class="mb-0">Pending Users</p>
+                                </div>
+                                <i class="fas fa-user-clock fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>@(Model.PendingArticles?.Count ?? 0)</h4>
+                                    <p class="mb-0">Pending Articles</p>
+                                </div>
+                                <i class="fas fa-newspaper fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>0</h4>
+                                    <p class="mb-0">Total Users</p>
+                                </div>
+                                <i class="fas fa-users fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>0</h4>
+                                    <p class="mb-0">Total Articles</p>
+                                </div>
+                                <i class="fas fa-file-alt fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Users -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Pending User Approvals</h5>
+                    <a href="@Url.Action("ApproveUser", "Admin")" class="btn btn-sm btn-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    @if (Model.PendingUsers != null && Model.PendingUsers.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Registration Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model.PendingUsers.Take(5))
+                                    {
+                                        <tr>
+                                            <td>@user.FirstName @user.LastName</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.UserName</td>
+                                            <td>@user.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                            <td>
+                                                <a href="@Url.Action("ApproveUser", "Admin", new { id = user.Id })" class="btn btn-sm btn-success">
+                                                    <i class="fas fa-check"></i> Approve
+                                                </a>
+                                                <a href="@Url.Action("Decline", "Admin", new { id = user.Id })" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-times"></i> Decline
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-3">
+                            <i class="fas fa-user-check fa-2x text-muted mb-2"></i>
+                            <p class="text-muted mb-0">No pending user approvals</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Pending Articles -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Pending Article Approvals</h5>
+                    <a href="@Url.Action("ApproveArticle", "Admin")" class="btn btn-sm btn-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    @if (Model.PendingArticles != null && Model.PendingArticles.Any())
+                    {
+                        <div class="row">
+                            @foreach (var article in Model.PendingArticles.Take(3))
+                            {
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        @if (!string.IsNullOrEmpty(article.ImageUrl))
+                                        {
+                                            <img src="@article.ImageUrl" class="card-img-top" alt="@article.Title" style="height: 150px; object-fit: cover;">
+                                        }
+                                        <div class="card-body">
+                                            <h6 class="card-title">@article.Title</h6>
+                                            <p class="card-text text-muted small">By @article.AuthorName</p>
+                                            <p class="card-text">@(article.Content.Length > 100 ? article.Content.Substring(0, 100) + "..." : article.Content)</p>
+                                            <div class="d-flex justify-content-between">
+                                                <small class="text-muted">@article.CreatedAt.ToString("MMM dd")</small>
+                                                <div>
+                                                    <a href="@Url.Action("ApproveArticle", "Admin", new { id = article.Id })" class="btn btn-sm btn-success">
+                                                        <i class="fas fa-check"></i>
+                                                    </a>
+                                                    <a href="@Url.Action("DeclineArticle", "Admin", new { id = article.Id })" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-3">
+                            <i class="fas fa-newspaper fa-2x text-muted mb-2"></i>
+                            <p class="text-muted mb-0">No pending article approvals</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.nav-pills .nav-link {
+    border-radius: 25px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+.nav-pills .nav-link.active {
+    background-color: #dc3545;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.btn {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+</style>

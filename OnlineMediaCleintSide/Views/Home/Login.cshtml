@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Login - Online Media";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Login to Online Media</h3>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <!-- User Login -->
+                        <div class="col-md-6">
+                            <h5 class="text-center mb-3">User Login</h5>
+                            <form asp-action="UserLogin" asp-controller="Login" method="post">
+                                <div class="mb-3">
+                                    <label for="userName" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="userName" name="UserName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="userPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="userPassword" name="Password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login as User</button>
+                            </form>
+                        </div>
+
+                        <!-- Staff/Admin Login -->
+                        <div class="col-md-6">
+                            <h5 class="text-center mb-3">Staff/Admin Login</h5>
+                            <form asp-action="StaffLogin" asp-controller="Login" method="post">
+                                <div class="mb-3">
+                                    <label for="staffUserName" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="staffUserName" name="UserName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="staffPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="staffPassword" name="Password" required>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Login as Staff/Admin</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <div class="text-center">
+                        <p class="mb-0">Don't have an account?</p>
+                        <a href="@Url.Action("Register", "Login")" class="btn btn-outline-primary">Register as User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.btn {
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+</style>

@@ -1,0 +1,178 @@
+﻿@model OnlineMediaCleintSide.Models.ArticleModel
+@{
+    ViewData["Title"] = Model?.Title ?? "Article Details";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            @if (Model != null)
+            {
+                <article class="card shadow-lg">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="height: 400px; object-fit: cover;">
+                    }
+                    
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h1 class="display-5 fw-bold text-primary">@Model.Title</h1>
+                                <div class="d-flex align-items-center text-muted">
+                                    <i class="fas fa-user me-2"></i>
+                                    <span>By @Model.AuthorName</span>
+                                    <span class="mx-2">•</span>
+                                    <i class="fas fa-calendar me-2"></i>
+                                    <span>@Model.CreatedAt.ToString("MMMM dd, yyyy")</span>
+                                    @if (!string.IsNullOrEmpty(Model.Category))
+                                    {
+                                        <span class="mx-2">•</span>
+                                        <span class="badge bg-secondary">@Model.Category</span>
+                                    }
+                                </div>
+                            </div>
+                            @if (Model.IsApproved)
+                            {
+                                <span class="badge bg-success fs-6">Approved</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning fs-6">Pending Review</span>
+                            }
+                        </div>
+
+                        <hr>
+
+                        <div class="article-content">
+                            @Html.Raw(Model.Content.Replace("\n", "<br>"))
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-3">
+                                <button class="btn btn-outline-primary" onclick="likeArticle()">
+                                    <i class="fas fa-heart"></i> Like
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="shareArticle()">
+                                    <i class="fas fa-share"></i> Share
+                                </button>
+                                <button class="btn btn-outline-info" onclick="bookmarkArticle()">
+                                    <i class="fas fa-bookmark"></i> Bookmark
+                                </button>
+                            </div>
+                            <div class="text-muted">
+                                <small>Last updated: @(Model.UpdatedAt?.ToString("MMM dd, yyyy") ?? Model.CreatedAt.ToString("MMM dd, yyyy"))</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Author Info -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-user-circle fa-3x text-primary"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-1">@Model.AuthorName</h5>
+                                <p class="text-muted mb-0">Article Author</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Articles -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Related Articles</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Sample Related Article</h6>
+                                        <p class="card-text text-muted">This is a sample related article that would be populated from the database.</p>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Another Related Article</h6>
+                                        <p class="card-text text-muted">Another sample related article for demonstration purposes.</p>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                    <h3>Article Not Found</h3>
+                    <p class="text-muted">The article you're looking for doesn't exist or has been removed.</p>
+                    <a href="@Url.Action("Index", "Articles")" class="btn btn-primary">Back to Articles</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+function likeArticle() {
+    // Implement like functionality
+    alert('Article liked! (This feature can be implemented with backend API)');
+}
+
+function shareArticle() {
+    if (navigator.share) {
+        navigator.share({
+            title: '@Model?.Title',
+            text: '@Model?.Content?.Substring(0, Math.Min(100, @Model?.Content?.Length ?? 0))',
+            url: window.location.href
+        });
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        alert('Article link copied to clipboard!');
+    }
+}
+
+function bookmarkArticle() {
+    // Implement bookmark functionality
+    alert('Article bookmarked! (This feature can be implemented with backend API)');
+}
+</script>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.article-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.btn {
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.badge {
+    font-size: 0.8rem;
+}
+</style>

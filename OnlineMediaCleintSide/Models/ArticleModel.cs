@@ -1,0 +1,35 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace OnlineMediaCleintSide.Models
+{
+	public class ArticleModel
+	{
+		public int Id { get; set; }
+
+		[Required]
+		[StringLength(200)]
+		public string Title { get; set; } = string.Empty;
+
+		[Required]
+		public string Content { get; set; } = string.Empty;
+
+		[StringLength(100)]
+		public string? Category { get; set; }
+
+		public string? ImageUrl { get; set; }
+
+		[Display(Name = "Image File")]
+		public IFormFile? ImageFile { get; set; }
+
+		public int UserId { get; set; }
+
+		[StringLength(100)]
+		public string? AuthorName { get; set; }
+
+		public bool IsApproved { get; set; } = false;
+
+		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+		public DateTime? UpdatedAt { get; set; }
+	}
+}

@@ -109,6 +109,11 @@ namespace OnlineMediaCleintSide.Controllers
 						content.Add(new StringContent(model.Description), "Description");
 						content.Add(new StringContent(model.StaffId.ToString()), "StaffId");
 
+						if (!string.IsNullOrEmpty(model.Category))
+						{
+							content.Add(new StringContent(model.Category), "Category");
+						}
+
 						var streamContent = new StreamContent(model.ImageFile.OpenReadStream());
 						streamContent.Headers.ContentType =
 							new System.Net.Http.Headers.MediaTypeHeaderValue(model.ImageFile.ContentType);

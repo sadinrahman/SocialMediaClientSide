@@ -105,12 +105,22 @@ namespace OnlineMediaCleintSide.Controllers
 				{
 					using var content = new MultipartFormDataContent();
 					content.Add(new StringContent(model.Title), "Title");
-					content.Add(new StringContent(model.Body), "Content");
+					content.Add(new StringContent(model.Body), "Body");
 					content.Add(new StringContent(model.UserId.ToString()), "UserId");
 
 					if (!string.IsNullOrEmpty(model.Category))
 					{
 						content.Add(new StringContent(model.Category), "Category");
+					}
+
+					if (!string.IsNullOrEmpty(model.Summary))
+					{
+						content.Add(new StringContent(model.Summary), "Summary");
+					}
+
+					if (!string.IsNullOrEmpty(model.Topic))
+					{
+						content.Add(new StringContent(model.Topic), "Topic");
 					}
 
 					var streamContent = new StreamContent(model.ImageFile.OpenReadStream());

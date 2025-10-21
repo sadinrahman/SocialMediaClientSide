@@ -24,7 +24,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> Index()
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -62,7 +62,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> AllArticlesList()
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -90,7 +90,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> ApproveUser(int id)
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -116,7 +116,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> Decline(int id)
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -142,7 +142,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> StaffList()
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -170,7 +170,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public IActionResult CreateStaff()
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				return View();
 			}
@@ -181,7 +181,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> CreateStaff(StaffModel model)
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				if (!ModelState.IsValid)
 					return View(model);
@@ -213,7 +213,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> DeleteStaff(int id)
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -239,7 +239,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> ApproveArticle(int id)
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -265,7 +265,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> DeclineArticle(int id)
 			{
 				if (!IsAdmin())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{

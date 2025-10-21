@@ -80,7 +80,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public IActionResult Create()
 			{
 				if (!IsStaff())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				return View();
 			}
@@ -91,7 +91,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> Create(AdvertisementModel model)
 			{
 				if (!IsStaff())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				if (!ModelState.IsValid)
 					return View(model);
@@ -155,7 +155,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> Edit(int id)
 			{
 				if (!IsStaff())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{
@@ -184,7 +184,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> Edit(int id, AdvertisementModel model)
 			{
 				if (!IsStaff())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				if (id != model.Id)
 					return NotFound();
@@ -218,7 +218,7 @@ namespace OnlineMediaCleintSide.Controllers
 			public async Task<IActionResult> Delete(int id)
 			{
 				if (!IsStaff())
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 
 				try
 				{

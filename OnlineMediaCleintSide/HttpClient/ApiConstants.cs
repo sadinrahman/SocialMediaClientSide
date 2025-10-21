@@ -2,7 +2,7 @@
 {
 	public static class ApiConstants
 	{
-		public const string BaseUrl = "https://localhost:5027/api/";
+		public const string BaseUrl = "http://localhost:5027/api/";
 		
 		// Auth endpoints
 		public static class AuthEndpoints

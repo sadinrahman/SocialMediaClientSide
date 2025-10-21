@@ -24,7 +24,7 @@ namespace OnlineMediaCleintSide.Controllers
 		public async Task<IActionResult> Index()
 		{
 			if (!IsStaff())
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 
 			try
 			{
@@ -52,7 +52,7 @@ namespace OnlineMediaCleintSide.Controllers
 		public async Task<IActionResult> Details()
 		{
 			if (!IsStaff())
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 
 			try
 			{
@@ -80,7 +80,7 @@ namespace OnlineMediaCleintSide.Controllers
 		public async Task<IActionResult> Edit(int id)
 		{
 			if (!IsStaff())
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 
 			try
 			{
@@ -109,7 +109,7 @@ namespace OnlineMediaCleintSide.Controllers
 		public async Task<IActionResult> Edit(int id, AdvertisementModel model)
 		{
 			if (!IsStaff())
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 
 			if (id != model.Id)
 				return NotFound();

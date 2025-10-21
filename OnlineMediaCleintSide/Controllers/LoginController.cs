@@ -39,7 +39,7 @@ namespace OnlineMediaCleintSide.Controllers
 				{
 					var result = await response.Content.ReadFromJsonAsync<ApiResponse<UserModel>>();
 					TempData["SuccessMessage"] = result?.Message ?? "Registration submitted. Please wait for admin approval.";
-					return RedirectToAction("Login", "Home");
+					return RedirectToAction("UserLogin", "Login");
 				}
 
 				var error = await response.Content.ReadAsStringAsync();
@@ -53,6 +53,13 @@ namespace OnlineMediaCleintSide.Controllers
 			}
 		}
 
+		// GET: Login/UserLogin
+		[HttpGet]
+		public IActionResult UserLogin()
+		{
+			return View();
+		}
+
 		// POST: Login/UserLogin
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -60,7 +67,7 @@ namespace OnlineMediaCleintSide.Controllers
 		{
 			if (!ModelState.IsValid)
 			{
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 			}
 
 			try
@@ -88,13 +95,20 @@ namespace OnlineMediaCleintSide.Controllers
 				}
 
 				TempData["ErrorMessage"] = "Invalid login attempt or account not approved";
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 			}
 			catch (Exception ex)
 			{
 				TempData["ErrorMessage"] = $"Error: {ex.Message}";
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 			}
+		}
+
+		// GET: Login/StaffLogin
+		[HttpGet]
+		public IActionResult StaffLogin()
+		{
+			return View();
 		}
 
 		// POST: Login/StaffLogin
@@ -104,7 +118,7 @@ namespace OnlineMediaCleintSide.Controllers
 		{
 			if (!ModelState.IsValid)
 			{
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 			}
 
 			try
@@ -136,18 +150,18 @@ namespace OnlineMediaCleintSide.Controllers
 						{
 							"Admin" => RedirectToAction("Index", "Admin"),
 							"Staff" => RedirectToAction("Index", "Staff"),
-							_ => RedirectToAction("Login", "Home")
+							_ => RedirectToAction("UserLogin", "Login")
 						};
 					}
 				}
 
 				TempData["ErrorMessage"] = "Invalid staff credentials";
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 			}
 			catch (Exception ex)
 			{
 				TempData["ErrorMessage"] = $"Error: {ex.Message}";
-				return RedirectToAction("Login", "Home");
+				return RedirectToAction("UserLogin", "Login");
 			}
 		}
 
@@ -175,7 +189,7 @@ namespace OnlineMediaCleintSide.Controllers
 				HttpContext.Session.Clear();
 			}
 
-			return RedirectToAction("Login", "Home");
+			return RedirectToAction("UserLogin", "Login");
 		}
 	}
 }

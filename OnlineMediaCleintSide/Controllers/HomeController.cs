@@ -13,7 +13,7 @@ namespace OnlineMediaCleintSide.Controllers
 
 		public IActionResult Login()
 		{
-			return View();
+			return RedirectToAction("UserLogin", "Login");
 		}
 
 		public IActionResult Privacy()

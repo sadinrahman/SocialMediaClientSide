@@ -6,7 +6,7 @@ builder.Services.AddControllersWithViews();
 // Add HttpClient factory
 builder.Services.AddHttpClient("BackendAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:5027/api/");
+    client.BaseAddress = new Uri("http://localhost:5027/api/");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 

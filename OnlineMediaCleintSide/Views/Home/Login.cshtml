@@ -1,17 +1,16 @@
-@model OnlineMediaCleintSide.Models.LoginRequest
 @{
     ViewData["Title"] = "Login - Online Media";
 }
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white text-center">
                     <h2 class="mb-0">Welcome to Online Media</h2>
                     <p class="mb-0">Choose your login type</p>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body p-4 text-center">
                     @if (TempData["ErrorMessage"] != null)
                     {
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -30,35 +29,18 @@
 
                     <div class="row">
                         <!-- User Login -->
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-header bg-info text-white text-center">
                                     <h4 class="mb-0">User Login</h4>
                                     <p class="mb-0">For regular users</p>
                                 </div>
                                 <div class="card-body">
-                                    <form asp-action="UserLogin" asp-controller="Login" method="post">
-                                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-                                        
-                                        <div class="mb-3">
-                                            <label asp-for="Username" class="form-label">Username</label>
-                                            <input asp-for="Username" class="form-control" placeholder="Enter your username" />
-                                            <span asp-validation-for="Username" class="text-danger"></span>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label asp-for="Password" class="form-label">Password</label>
-                                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
-                                            <span asp-validation-for="Password" class="text-danger"></span>
-                                        </div>
-
-                                        <div class="d-grid">
-                                            <button type="submit" class="btn btn-info btn-lg">
-                                                <i class="fas fa-user"></i> User Login
-                                            </button>
-                                        </div>
-                                    </form>
-
+                                    <p class="mb-3">Sign in to your user account</p>
+                                    <a href="@Url.Action("UserLogin", "Login")" class="btn btn-info btn-lg w-100">
+                                        <i class="fas fa-user"></i> User Login
+                                    </a>
+                                    
                                     <hr>
                                     <div class="text-center">
                                         <p class="mb-2">Don't have an account?</p>
@@ -71,35 +53,18 @@
                         </div>
 
                         <!-- Staff Login -->
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-header bg-success text-white text-center">
                                     <h4 class="mb-0">Staff Login</h4>
                                     <p class="mb-0">For staff and admin</p>
                                 </div>
                                 <div class="card-body">
-                                    <form asp-action="StaffLogin" asp-controller="Login" method="post">
-                                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-                                        
-                                        <div class="mb-3">
-                                            <label asp-for="Username" class="form-label">Username</label>
-                                            <input asp-for="Username" class="form-control" placeholder="Enter your username" />
-                                            <span asp-validation-for="Username" class="text-danger"></span>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label asp-for="Password" class="form-label">Password</label>
-                                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
-                                            <span asp-validation-for="Password" class="text-danger"></span>
-                                        </div>
-
-                                        <div class="d-grid">
-                                            <button type="submit" class="btn btn-success btn-lg">
-                                                <i class="fas fa-user-tie"></i> Staff Login
-                                            </button>
-                                        </div>
-                                    </form>
-
+                                    <p class="mb-3">Sign in to your staff account</p>
+                                    <a href="@Url.Action("StaffLogin", "Login")" class="btn btn-success btn-lg w-100">
+                                        <i class="fas fa-user-tie"></i> Staff Login
+                                    </a>
+                                    
                                     <hr>
                                     <div class="text-center">
                                         <p class="mb-2">Need staff access?</p>
